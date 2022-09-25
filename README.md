@@ -36,7 +36,7 @@ LazyBing has pool english. chinese README only.
 
 ​		`server_dirname: 服务端文件夹名称`		`world_dirname: 存档文件夹名称`
 
-![hard_config](C:\Users\Sinbing\Desktop\code\Minecraft\MCDRplugin\Offline\pic\hard_config.png)
+![hard_config](https://github.com/Lazy-Bing-Server/MCDR-offline-whitelist-manager/blob/main/pic/hard_config.png)
 
 
 
@@ -68,7 +68,7 @@ LazyBing has pool english. chinese README only.
 
 ​			添加玩家至服务器白名单，**# 该命令需要MCDR权限ADMIN及以上 #**。
 
-​			![wlist_add](C:\Users\Sinbing\Desktop\code\Minecraft\MCDRplugin\Offline\pic\wlist_add.png)
+​			![wlist_add](https://github.com/Lazy-Bing-Server/MCDR-offline-whitelist-manager/blob/main/pic/wlist_add.png)
 
 
 
@@ -76,7 +76,7 @@ LazyBing has pool english. chinese README only.
 
 ​			从服务器白名单中移出玩家，**# 该命令需要MCDR权限ADMIN及以上 #**。
 
-​			![wlist_remove](C:\Users\Sinbing\Desktop\code\Minecraft\MCDRplugin\Offline\pic\wlist_remove.png)
+​			![wlist_remove](https://github.com/Lazy-Bing-Server/MCDR-offline-whitelist-manager/blob/main/pic/wlist_remove.png)
 
 
 
@@ -84,7 +84,7 @@ LazyBing has pool english. chinese README only.
 
 ​			显示服务器白名单列表，**# 该命令需要MCDR权限ADMIN及以上 #**。
 
-​			![wlist_list](C:\Users\Sinbing\Desktop\code\Minecraft\MCDRplugin\Offline\pic\wlist_list.png)
+​			![wlist_list](https://github.com/Lazy-Bing-Server/MCDR-offline-whitelist-manager/blob/main/pic/wlist_list.png)
 
 
 
@@ -94,7 +94,7 @@ LazyBing has pool english. chinese README only.
 
 ​		备份中会使用 **A / R** 记录本次备份时的操作类型 添加 / 删除 。（意味这备份是X操作前保存的）
 
-​		![backup_whitelist](C:\Users\Sinbing\Desktop\code\Minecraft\MCDRplugin\Offline\pic\backup_whitelist.png)
+​		![backup_whitelist](https://github.com/Lazy-Bing-Server/MCDR-offline-whitelist-manager/blob/main/pic/backup_whitelist.png)
 
 
 
