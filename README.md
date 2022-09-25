@@ -64,8 +64,6 @@ LazyBing has pool english. chinese README only.
 
 
 
-
-
 ​		`!!wlist add [player name]` 
 
 ​			添加玩家至服务器白名单，**# 该命令需要MCDR权限ADMIN及以上 #**。
@@ -74,15 +72,11 @@ LazyBing has pool english. chinese README only.
 
 
 
-
-
 ​		`!!wlist remove [player name]`
 
 ​			从服务器白名单中移出玩家，**# 该命令需要MCDR权限ADMIN及以上 #**。
 
 ​			![wlist_remove](C:\Users\Sinbing\Desktop\code\Minecraft\MCDRplugin\Offline\pic\wlist_remove.png)
-
-
 
 
 
@@ -115,3 +109,11 @@ LazyBing has pool english. chinese README only.
 ​	账号己注销: 提供了本地计算离线UUID的代码
 
 ​	Tonashiki: 为我产生了编写该插件的需求。
+
+
+
+
+
+## 彩蛋
+
+​	本插件系强迫症友好型插件，插件大小为 8192 **Bytes**.
