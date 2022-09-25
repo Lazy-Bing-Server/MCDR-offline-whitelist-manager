@@ -2,6 +2,7 @@
 # Sinbing code.
 from urllib.request import urlopen
 from mcdreforged.api.all import *
+import hashlib
 import shutil
 import time
 import json
@@ -12,8 +13,8 @@ DEBUG = False
 server_dirname = 'server'
 world_dirname = 'world'
 
-# 1: Caculate offline uuid from API  |  2: diff offline uuid from playerdata
-offline_uuid_method = 1
+# 1: Caculate offline uuid from API  |  2: diff offline uuid from playerdata  |  3： local calculator by: 账号己注销  |
+offline_uuid_method = 3
 bot_wait_time = 3
 
 
@@ -109,6 +110,17 @@ def get_offline_uuid_m2(info: Info, player_name: str):
     return diff_uuid, Flag
 
 
+def get_offline_uuid_m3(player_name: str):
+    # Thanks for [账号己注销 - BiliUID:5995861]
+    md5Bytes = bytearray(hashlib.md5(b'OfflinePlayer:'+player_name.encode()).digest())
+    md5Bytes[6] &= 0x0f    # clear version
+    md5Bytes[6] |= 0x30    # set to version 3
+    md5Bytes[8] &= 0x3f    # clear variant
+    md5Bytes[8] |= 0x80    # set to IETF variant
+    offline_uuid = md5Bytes.hex()[:8]+ '-'+ md5Bytes.hex()[8:12]+ '-'+ md5Bytes.hex()[12:16]+ '-'+ md5Bytes.hex()[16:20]+ '-'+ md5Bytes.hex()[20:]
+    return offline_uuid, True
+
+
 def add_whitelist(info: Info, player_name: str):
     # Get whitelist name.
     whitelist_list: list = json_file_to_list(os.path.join(server_dirname, 'whitelist.json'))
@@ -126,6 +138,8 @@ def add_whitelist(info: Info, player_name: str):
             offline_uuid = get_offline_uuid_m1(player_name)
         elif offline_uuid_method == 2:
             offline_uuid = get_offline_uuid_m2(info, player_name)
+        elif offline_uuid_method == 3:
+            offline_uuid = get_offline_uuid_m3(player_name)
 
     # Add whitelist.
         if offline_uuid[1]:
@@ -146,7 +160,7 @@ def remove_whitelist(info: Info, player_name: str):
         if player_name == value['name']:
             sub_dict = {'uuid': value['uuid'], 'name': value['name']}
             whitelist_list.remove(sub_dict)
-    
+
     # Remove whitelist.
     create_whitelist_file(whitelist_list, os.path.join(server_dirname), '_R_')
     Dprint(info, f'白名单已移除玩家: name: {player_name}.')
@@ -159,8 +173,6 @@ def show_whitelist(info: Info):
     for i in range(0, len(whitelist_list)):
         player_name, player_uuid = whitelist_list[i]['name'], whitelist_list[i]['uuid']
         Dprint(info, f'{i+1}: {player_name} - {player_uuid}')
-    
-
 
 
 def show_help_msg(info: Info):
@@ -173,40 +185,42 @@ def show_help_msg(info: Info):
     ======================================''')
 
 
-
+# MCDR.
 def on_user_info(server: PluginServerInterface, info: Info):
     if info.content.startswith('!!wlist'):
         args = info.content.split(' ')
 
-        if args[1] == 'add':
-            if server.get_permission_level(info) >= 3:
-                if args[2] != '':
-                    add_whitelist(info, args[2])
+        try:
+            if args[1] == 'add':
+                if server.get_permission_level(info) >= 3:
+                    if args[2] != '':
+                        add_whitelist(info, args[2])
+                    else:
+                        Dprint(info, '你不告诉我名字我加啥啊')
                 else:
-                    Dprint(info, '你不告诉我名字我加啥啊')
-            else:
-                Dprint(info, '你想屁吃')
+                    Dprint(info, '你想屁吃')
 
-        elif args[1] == 'remove':
-            if server.get_permission_level(info) >= 3:
-                if args[2] != '':
-                    remove_whitelist(info, args[2])
+            elif args[1] == 'remove':
+                if server.get_permission_level(info) >= 3:
+                    if args[2] != '':
+                        remove_whitelist(info, args[2])
+                    else:
+                        Dprint(info, '你不告诉我名字我删谁啊')
                 else:
-                    Dprint(info, '你不告诉我名字我删谁啊')
-            else:
-                Dprint(info, '你想屁吃')
+                    Dprint(info, '你想屁吃')
 
-        elif args[1] == 'list':
-            if server.get_permission_level(info) >= 3:
-                show_whitelist(info)
-            else:
-                Dprint(info, '你想屁吃')
+            elif args[1] == 'list':
+                if server.get_permission_level(info) >= 3:
+                    show_whitelist(info)
+                else:
+                    Dprint(info, '你想屁吃')
 
-        elif args[1] == 'help':
+            elif args[1] == 'help':
+                show_help_msg(info)
+            else:
+                Dprint(info, f'解析命令树第二项时发生BUG.')
+        except IndexError:
             show_help_msg(info)
-
-        else:
-            Dprint(info, f'出BUG咯！！！ args: {args}')
 
 
 def on_load(server: PluginServerInterface, prev):
