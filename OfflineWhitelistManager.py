@@ -15,7 +15,6 @@ world_dirname = 'world'
 # 1: Caculate offline uuid from API  |  2: diff offline uuid from playerdata
 offline_uuid_method = 1
 bot_wait_time = 3
-format_time = time.strftime('%y-%m-%d_%H-%M-%S', time.localtime())
 
 
 PLUGIN_METADATA = {
@@ -57,6 +56,7 @@ def json_file_to_list(json_path: str) -> list:
 
 
 def create_whitelist_file(json_list: list, workpath: str, type: str):
+    format_time = time.strftime('%y-%m-%d_%H-%M-%S', time.localtime())
     # Backup old whitelist & create new whitelist.
     check_dir(os.path.join(workpath, 'whitelist_backup'))
     backup_whitelist_name = format_time + type + 'whitelist.json'
@@ -126,7 +126,6 @@ def add_whitelist(info: Info, player_name: str):
             offline_uuid = get_offline_uuid_m1(player_name)
         elif offline_uuid_method == 2:
             offline_uuid = get_offline_uuid_m2(info, player_name)
-
 
     # Add whitelist.
         if offline_uuid[1]:
